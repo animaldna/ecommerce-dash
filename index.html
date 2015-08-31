@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ZingChart eCommerce Dashboard Demo</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/dashboard.css" />
+  <script src="http://cdn.zingchart.com/zingchart.min.js"></script>
+  <script>zingchart.MODULESDIR="http://cdn.zingchart.com/modules/";</script>
+  <script>zingchart.loadModules('maps,maps-usa')</script>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-12016652-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+</head>
+<body class="application">
+  <div id="mask">
+        <div id="loading">
+           <div class="spinner">
+              <div class="cube1"></div>
+              <div class="cube2"></div>
+            </div>
+        </div>
+    </div>  
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="https://www.google.com/search?q=crazy+cat+faces.&source=lnms&tbm=isch&sa=X&ved=0CAcQ_AUoAWoVChMI26ypx5XgxgIVCAySCh3aewM7&biw=1741&bih=896#tbm=isch&q=cats"><img id="kitty" src="assets/img/kitty.png"></a>
+        <a class="navbar-brand" href="http://www.zingchart.com">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="navbar-brand" href="http://www.zingchart.com">ZingChart.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Site Traffic
+          </div>
+          <div class="chart-stage">
+            <div id="area-chart" style="height:240px;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Top Traffic Sources
+          </div>
+          <div class="chart-stage twoFiftyHigh" id="referral-grid">
+            <table>
+              <tr>
+                <td>1.</td>
+                <td>Reddit.com/referral</td>
+              </tr>
+              <tr>
+                <td>2.</td>
+                <td>Google.com/organic</td>
+              </tr>
+              <tr>
+                <td>3.</td>
+                <td>CatLovers.com/referral</td>
+              </tr>
+              <tr>
+                <td>4.</td>
+                <td>(direct)/none</td>
+              </tr>
+              <tr>
+                <td>5.</td>
+                <td>Cheezburger.com/referral</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Sales by State
+          </div>
+          <div class="chart-stage threeFiftyHigh">
+            <div id="sales-map"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Conversion and Cart Abandonment Rate
+          </div>
+          <div class="chart-stage threeFiftyHigh">
+            <div id="rate-bullets"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Top Sellers
+          </div>
+          <div class="chart-stage threeFiftyHigh">
+            <div id="top-sellers-pie"></div>
+          </div>          
+        </div>
+      </div>
+<!-- end of three -->
+      <div class="col-sm-6 col-md-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Profit Margin (Top 5 Products)
+          </div>
+          <div class="chart-stage twoFiftyHigh">
+            <div id="profit-margin-bar"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Revenues vs Expenses
+          </div>
+           <div class="chart-stage twoFiftyHigh">
+            <div id="waterfall"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <hr>
+
+    <p class="small text-muted">Template built with &#9829; by <a href="https://keen.io">Keen IO</a></p>
+  </div>
+
+  <script type="text/javascript" src="assets/js/charts.js"></script>
+  <script>
+      zingchart.load = function () {
+            setTimeout(function(){
+                $("#mask").slideUp();
+            },3000);
+        }
+    zingchart.render({ 
+      id : 'area-chart', 
+      data : areaChart, 
+      height: 240, 
+      width: "100%",
+      hideprogresslogo:true,
+      "background-color":"white"
+    });
+
+
+    zingchart.render({ 
+      id : 'sales-map', 
+      data : salesMap, 
+      height: 350, 
+      width: "100%",
+      hideprogresslogo:true,
+      "background-color":"white" 
+    });
+
+    zingchart.render({ 
+      id : 'rate-bullets', 
+      data : rateBullets, 
+      height: 350, 
+      width: "100%",
+      hideprogresslogo:true,
+      "background-color":"white" 
+    });
+
+    zingchart.render({ 
+      id : 'top-sellers-pie', 
+      data : topSellersPie, 
+      height: 350, 
+      width: "100%",
+      hideprogresslogo:true,
+      "background-color":"white" 
+    });
+
+    zingchart.render({ 
+      id : 'profit-margin-bar', 
+      data : profitMarginBar, 
+      height: 250, 
+      width: "100%",
+      hideprogresslogo:true,
+      "background-color":"white" 
+    });
+
+  zingchart.render({ 
+      id : 'waterfall', 
+      data : waterfall, 
+      height: 250, 
+      width: "100%",
+      hideprogresslogo:true,
+      "background-color":"white" 
+    });
+
+  
+  </script>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
